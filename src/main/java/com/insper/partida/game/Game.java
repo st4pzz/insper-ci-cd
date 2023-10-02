@@ -1,6 +1,6 @@
 package com.insper.partida.game;
 
-import com.insper.partida.equipe.Team;
+import com.insper.partida.equipe.Team
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
