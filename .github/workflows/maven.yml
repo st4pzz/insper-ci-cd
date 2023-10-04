@@ -38,7 +38,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ezambomsantana/partida-06-ci:${{ github.sha }}
+        tags: eriksoaress/partida-06-ci:${{ github.sha }}
 
     - name: Generate JaCoCo Badge
       id: jacocoGenerate
