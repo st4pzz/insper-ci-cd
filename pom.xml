@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<project.test.result.directory>${project.build.directory}/test-results</project.test.result.directory>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
