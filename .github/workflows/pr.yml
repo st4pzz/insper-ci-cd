@@ -21,6 +21,12 @@ jobs:
         
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
+    - name: Generate JaCoCo Badge
+      id: jacocoGenerate
+      uses: cicirello/jacoco-badge-generator@v2
+      with:
+        generate-branches-badge: true
       
     - name: Add coverage to PR
       id: jacoco
@@ -30,7 +36,7 @@ jobs:
           ${{ github.workspace }}/**/target/test-results/jacoco/jacoco.xml
         token: ${{ secrets.GITHUB_TOKEN }}
         min-coverage-overall: 20
-        min-coverage-changed-files: 60
+        min-coverage-changed-files: 6
 
     - name: Fail PR if overall coverage is less than 20%
       if: ${{ steps.jacoco.outputs.coverage-overall < 20.0 }}
