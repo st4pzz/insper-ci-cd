@@ -129,4 +129,61 @@ public class GameControllerTests {
         String resp = result.getResponse().getContentAsString();
         Assertions.assertEquals(om.writeValueAsString(game), resp);
     }
+    
+    @Test
+    void testSaveGame() throws Exception {
+        SaveGameDTO saveGameDTO = new SaveGameDTO();
+        saveGameDTO.setHome("Kansas");
+        saveGameDTO.setAway("Dallas");
+        saveGameDTO.setAttendance(50000);
+        
+        GameReturnDTO game = new GameReturnDTO();
+        game.setIdentifier("game2");
+
+        Mockito.when(gameService.saveGame(any(SaveGameDTO.class))).thenReturn(game);
+
+        ObjectMapper om = new ObjectMapper();
+        MvcResult result = mockMvc
+            .perform(MockMvcRequestBuilders.post("/game")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(saveGameDTO))
+            )
+            .andExpect(status().isOk())
+            .andReturn();
+
+        String resp = result.getResponse().getContentAsString();
+        Assertions.assertEquals(om.writeValueAsString(game), resp);
+    }
+
+    @Test
+    void testDeleteGame() throws Exception {
+        mockMvc
+            .perform(MockMvcRequestBuilders.delete("/game/game1"))
+            .andExpect(status().isOk());
+
+        Mockito.verify(gameService, Mockito.times(1)).deleteGame("game1");
+    }
+
+    @Test
+    void testGetScoreTeam() throws Exception {
+        Integer score = 10;
+        Mockito.when(gameService.getScoreTeam("game1")).thenReturn(score);
+
+        MvcResult result = mockMvc
+            .perform(MockMvcRequestBuilders.get("/game/game1/score"))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        String resp = result.getResponse().getContentAsString();
+        Assertions.assertEquals(score.toString(), resp);
+    }
+
+    @Test
+    void testGenerateData() throws Exception {
+        mockMvc
+            .perform(MockMvcRequestBuilders.post("/game/generateData"))
+            .andExpect(status().isOk());
+
+        Mockito.verify(gameService, Mockito.times(1)).generateData();
+    }
 }
