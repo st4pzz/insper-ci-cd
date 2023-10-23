@@ -15,6 +15,7 @@ import java.util.List;
 public class Team {
 
     @Id
+    
     private String id;
 
     private String identifier;
